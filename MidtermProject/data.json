@@ -1,0 +1,13 @@
+{
+    "stocks":[
+        {"num": 1, "name": "Microsoft", "favorite": false, "image": "./images/ethan.jpg", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 2, "name": "Apple", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 3, "name": "Tesla", "favorite": true, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 4, "name": "GameStop", "favorite": true, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 5, "name": "AMC", "favorite": true, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 6, "name": "Google", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 7, "name": "Amazon", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 8, "name": "Disney", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 9, "name": "Meta", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]}
+    ]
+}
