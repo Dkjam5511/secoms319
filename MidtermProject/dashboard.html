@@ -85,15 +85,27 @@
   <body>
     
 <header>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a href="./index.html" class="navbar-brand d-flex align-items-center">
-        <strong>Team 8's Stocks</strong>
-      </a>
-      <a href="./dashboard.html" style="color: white; ">All Stocks</a> 
-      <a href="./about.html" style="color: white; ">About Us</a> 
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="padding-top: 0px;">
+    <div class="container-fluid bg-dark">
+      <a class="navbar-brand text-primary" href="./">StockStream</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-primary" aria-current="page" href="./">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="./dashboard.html">All Stocks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-primary" href="./about.html">About Us</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </nav>
 </header>
 
 <div class="container-fluid">
@@ -115,7 +127,7 @@
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>Section title</h2>
+      <h2>All Stocks</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
@@ -123,6 +135,7 @@
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Image</th>
+              <th scope="col">Price</th>
             </tr>
           </thead>
           <tbody>
@@ -130,46 +143,55 @@
               <td id="num1">1,001</td>
               <td id="name1">random</td>
               <td id="image1"></td>
+              <td id="price1"></td>
             </tr>
             <tr id="2">
               <td id="num2">1,001</td>
               <td id="name2">random</td>
-              <td id="image2">data</td>
+              <td id="image2"></td>
+              <td id="price2"></td>
             </tr>
             <tr id="3">
               <td id="num3">1,001</td>
               <td id="name3">random</td>
-              <td id="image3">data</td>
+              <td id="image3"></td>
+              <td id="price3"></td>
             </tr>
             <tr id="4">
               <td id="num4">1,001</td>
               <td id="name4">random</td>
-              <td id="image4">data</td>
+              <td id="image4"></td>
+              <td id="price4"></td>
             </tr>
             <tr id="5">
               <td id="num5">1,001</td>
               <td id="name5">random</td>
-              <td id="image5">data</td>
+              <td id="image5"></td>
+              <td id="price5"></td>
             </tr>
             <tr id="6">
               <td id="num6">1,001</td>
               <td id="name6">random</td>
-              <td id="image6">data</td>
+              <td id="image6"></td>
+              <td id="price6"></td>
             </tr>
             <tr id="7">
               <td id="num7">1,001</td>
               <td id="name7">random</td>
-              <td id="image7">data</td>
+              <td id="image7"></td>
+              <td id="price7"></td>
             </tr>
             <tr id="8">
               <td id="num8">1,001</td>
               <td id="name8">random</td>
-              <td id="image8">data</td>
+              <td id="image8"></td>
+              <td id="price8"></td>
             </tr>
             <tr id="9">
               <td id="num9">1,001</td>
               <td id="name9">random</td>
-              <td id="image9">data</td>
+              <td id="image9"></td>
+              <td id="price9"></td>
             </tr>
           </tbody>
         </table>

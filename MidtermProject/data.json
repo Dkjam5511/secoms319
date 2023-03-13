@@ -1,13 +1,13 @@
 {
     "stocks":[
-        {"num": 1, "name": "Microsoft", "favorite": false, "image": "./images/ethan.jpg", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 2, "name": "Apple", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 3, "name": "Tesla", "favorite": true, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 4, "name": "GameStop", "favorite": true, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 5, "name": "AMC", "favorite": true, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 6, "name": "Google", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 7, "name": "Amazon", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 8, "name": "Disney", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]},
-        {"num": 9, "name": "Meta", "favorite": false, "image": "./images/Micorsoft.png", "data": [200, 300, 250, 450, 750, 400, 550]}
+        {"num": 1, "name": "Microsoft", "favorite": false, "image": "./images/microsoft.jpg", "data": [331, 424, 326, 440, 380, 400, 468]},
+        {"num": 2, "name": "Apple", "favorite": false, "image": "./images/apple.png", "data": [331, 424, 326, 560, 400, 468, 530]},
+        {"num": 3, "name": "Tesla", "favorite": true, "image": "./images/tesla.png", "data": [200, 300, 250, 450, 650, 400, 550]},
+        {"num": 4, "name": "GameStop", "favorite": false, "image": "./images/gamestop.png", "data": [331, 424, 326, 440, 380, 400, 210]},
+        {"num": 5, "name": "AMC", "favorite": false, "image": "./images/AMC.png", "data": [200, 300, 250, 450, 750, 400, 550]},
+        {"num": 6, "name": "Google", "favorite": true, "image": "./images/google.png", "data": [200, 300, 250, 450, 650, 400, 670]},
+        {"num": 7, "name": "Amazon", "favorite": true, "image": "./images/amazon.png", "data": [331, 380, 400, 468, 331, 424, 540]},
+        {"num": 8, "name": "Disney", "favorite": false, "image": "./images/disney.png", "data": [331, 300, 250, 450, 424, 326, 400]},
+        {"num": 9, "name": "Meta", "favorite": false, "image": "./images/meta.png", "data": [331, 424, 326, 440, 380, 400, 468]}
     ]
 }

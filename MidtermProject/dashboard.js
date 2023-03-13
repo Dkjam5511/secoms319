@@ -22,6 +22,7 @@ function assignStocks(json){
     var img = document.createElement('img');
     img.src = json.stocks[i-1].image;
     children[2].appendChild(img);
+    children[3].innerText = "$" + json.stocks[i-1].data[6];
   }
 }
 
