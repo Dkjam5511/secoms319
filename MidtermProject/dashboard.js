@@ -1,7 +1,10 @@
 /* globals Chart:false, feather:false */
+let stocks;
+
 fetch('./data.json')
   .then((response) => response.json())
   .then((json) => {
+    stocks = json;
     assignStocks(json);
   })
   .catch(function (err) {
@@ -25,7 +28,13 @@ function assignStocks(json){
     children[3].innerText = "$" + json.stocks[i-1].data[6];
   }
 }
-
+let myChart;
+function changeChart(index){
+  for(let i = 0; i < 7; i++){
+    myChart.data.datasets[0].data[i] = stocks.stocks[index].data[i];
+  }
+  myChart.update();
+}
 
 (() => {
   'use strict'
@@ -35,7 +44,7 @@ function assignStocks(json){
   // Graphs
   const ctx = document.getElementById('myChart')
   // eslint-disable-next-line no-unused-vars
-  const myChart = new Chart(ctx, {
+  myChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: [
@@ -49,13 +58,13 @@ function assignStocks(json){
       ],
       datasets: [{
         data: [
-          15339,
-          21345,
-          18483,
-          24003,
-          23489,
-          24092,
-          12034
+          331,
+          424,
+          326,
+          440,
+          380,
+          400,
+          468
         ],
         lineTension: 0,
         backgroundColor: 'transparent',
