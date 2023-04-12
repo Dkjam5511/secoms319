@@ -2,7 +2,7 @@ import Shop from "./Shop.js";
 import Browse from "./Browse.js";
 
 function App() {
-  return <Browse />;
+  return <Shop />;
 }
 
 export default App;

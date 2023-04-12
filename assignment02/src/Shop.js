@@ -15,6 +15,18 @@ const Shop = () => {
     setCart(hardCopy);
   };
 
+  useEffect(() => {
+    let newTotalCost = 0;
+
+    console.log(cart);
+
+    for (const el of cart) {
+      newTotalCost += el.price;
+    }
+    
+    setCartTotal(newTotalCost);
+  }, [cart]);
+
   const listItems = items.map((el) => (
     // PRODUCT
     <div class="row border-top border-bottom" key={el.id}>
@@ -32,7 +44,7 @@ const Shop = () => {
             variant="light"
             onClick={() => removeFromCart(el)}
           >
-            {" "}
+            {""}
             -{" "}
           </button>{" "}
           <button type="button" variant="light" onClick={() => addToCart(el)}>
@@ -41,7 +53,8 @@ const Shop = () => {
           </button>
         </div>
         <div class="col">
-          ${el.price} <span class="close">&#10005;</span>
+          ${el.price}
+        </div><div class="col">
           {howManyofThis(el.id)}
         </div>
       </div>
@@ -49,7 +62,7 @@ const Shop = () => {
   ));
 
   function howManyofThis(id) {
-    let hmot = cart.filter((cartItem) => cartItem.id === id);
+    let hmot = cart.filter((cartItem) => cartItem.id === id).length;
     return hmot;
   }
 
@@ -107,7 +120,6 @@ const Shop = () => {
   return (
     <div>
       {/*SHOPPING CART ITEMS*/}
-      STORE SE/ComS319
       <div class="card">
         <div class="row">
           <div class="col-md-8 cart">
@@ -115,7 +127,7 @@ const Shop = () => {
               <div class="row">
                 <div class="col">
                   <h4>
-                    <b>319 Shopping Cart</b>
+                    <b>Fruit Shopping Cart</b>
                   </h4>
                 </div>
                 <div class="col align-self-center text-right text-muted">
@@ -213,7 +225,7 @@ const Shop = () => {
                   State
                 </label>
                 <select id="inputState" class="form-select">
-                  <option selected>Choose...</option>
+                  <option >Choose...</option>
                 </select>
               </div>
               <div class="col-md-2">
@@ -247,7 +259,7 @@ const Shop = () => {
                 <p class="card-text">Here is a summary of your order.</p>
               </div>
               <ul class="list-group list-group-flush"></ul>
-              <a href="" onclick="location.reload()" class="btn btn-secondary">
+              <a href="" class="btn btn-secondary">
                 {" "}
                 <i class="bi-arrow-left-circle"></i>
                 Return
