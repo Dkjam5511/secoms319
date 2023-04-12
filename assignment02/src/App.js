@@ -1,5 +1,7 @@
+import Shop from "./Shop.js";
+
 function App() {
-  return <div>Main Page</div>;
+  return <Shop />;
 }
 
 export default App;

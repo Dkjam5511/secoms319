@@ -1,105 +1,109 @@
-let items = [
-  {
-    id: 1,
-    title: "Apple",
-    price: 1.5,
-    description:
-      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-    category: "Fruit",
-    image: "./images/apple.png",
-    rating: { rate: 4.5, count: 530 },
-  },
-  {
-    id: 2,
-    title: "Avocado",
-    price: 7,
-    description:
-      "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
-    category: "Fruit",
-    image: "./images/avocado.png",
-    rating: { rate: 4.9, count: 259 },
-  },
-  {
-    id: 3,
-    title: "Banana",
-    price: 3,
-    description:
-      "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
-    category: "Fruit",
-    image: "./images/banana.png",
-    rating: { rate: 4.4, count: 240 },
-  },
-  {
-    id: 4,
-    title: "Grape",
-    price: 1.1,
-    description:
-      "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
-    category: "Fruit",
-    image: "./images/grape.png",
-    rating: { rate: 4.0, count: 890 },
-  },
-  {
-    id: 5,
-    title: "Peach",
-    price: 3,
-    description:
-      "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "Fruit",
-    image: "./images/peach.png",
-    rating: { rate: 3.6, count: 200 },
-  },
-  {
-    id: 6,
-    title: "Pineapple",
-    price: 9,
-    description:
-      "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
-    category: "Fruit",
-    image: "./images/pineapple.png",
-    rating: { rate: 4.9, count: 150 },
-  },
-];
+import items from "./products.json";
+import React, { useState, useEffect } from "react";
 
-const listItems = items.map((el) => (
-  // PRODUCT
-  <div class="row border-top border-bottom" key={el.id}>
-    <div class="row main align-items-center">
-      <div class="col-2">
-        <img class="img-fluid" src={el.image} />
-      </div>
-      <div class="col">
-        <div class="row text-muted">{el.title}</div>
-        <div class="row">{el.category}</div>
-      </div>
-      <div class="col">
-        <button
-          type="button"
-          variant="light"
-          onClick={() => removeFromCart(el)}
-        >
-          {" "}
-          -{" "}
-        </button>{" "}
-        <button type="button" variant="light" onClick={() => addToCart(el)}>
-          {" "}
-          +{" "}
-        </button>
-      </div>
-      <div class="col">
-        ${el.price} <span class="close">&#10005;</span>
-        {howManyofThis(el.id)}
+const Shop = () => {
+  const [cart, setCart] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
+
+  const addToCart = (el) => {
+    setCart([...cart, el]);
+  };
+
+  const removeFromCart = (el) => {
+    let hardCopy = [...cart];
+    hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
+    setCart(hardCopy);
+  };
+
+  const listItems = items.map((el) => (
+    // PRODUCT
+    <div class="row border-top border-bottom" key={el.id}>
+      <div class="row main align-items-center">
+        <div class="col-2">
+          <img class="img-fluid" src={el.image} />
+        </div>
+        <div class="col">
+          <div class="row text-muted">{el.title}</div>
+          <div class="row">{el.category}</div>
+        </div>
+        <div class="col">
+          <button
+            type="button"
+            variant="light"
+            onClick={() => removeFromCart(el)}
+          >
+            {" "}
+            -{" "}
+          </button>{" "}
+          <button type="button" variant="light" onClick={() => addToCart(el)}>
+            {" "}
+            +{" "}
+          </button>
+        </div>
+        <div class="col">
+          ${el.price} <span class="close">&#10005;</span>
+          {howManyofThis(el.id)}
+        </div>
       </div>
     </div>
-  </div>
-));
+  ));
 
-function howManyofThis(id) {
-  let hmot = cart.filter((cartItem) => cartItem.id === id);
-  return hmot;
-}
+  function howManyofThis(id) {
+    let hmot = cart.filter((cartItem) => cartItem.id === id);
+    return hmot;
+  }
 
-function App() {
+  /*PAYMENT FORM VALIDATION
+  let validate = function () {
+    val = true;
+    let email = document.getElementById("inputEmail4");
+    let name = document.getElementById("inputName");
+    let card = document.getElementById("inputCard");
+    if (
+      !email.value.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+    ) {
+      email.setAttribute("class", "form-control is-invalid");
+      val = false;
+    } else {
+      email.setAttribute("class", "form-control is-valid");
+      order.email = email.value;
+    }
+    if (name.value.length == 0) {
+      name.setAttribute("class", "form-control is-invalid");
+      val = false;
+    } else {
+      name.setAttribute("class", "form-control is-valid");
+      order.name = name.value;
+    }
+    if (!card.value.match(/^[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}$/)) {
+      card.setAttribute("class", "form-control is-invalid");
+      val = false;
+    } else {
+      card.setAttribute("class", "form-control is-valid");
+      order.card = card.value;
+    }
+    if (val) {
+      form.classList.add("collapse");
+      for (const [key, value] of Object.entries(order)) {
+        summaryList.innerHTML +=
+          '<li class="list-group-item"> <b>' +
+          `${key}` +
+          ": </b>" +
+          `${value}` +
+          "</li>";
+      }
+      summaryCard.classList.remove("collapse");
+      alertPlaceholder.innerHTML = "";
+      alert(
+        '<i class="bi-cart-check-fill"></i> You have made an order!',
+        "success"
+      );
+    }
+    return val;
+  };
+*/
   return (
     <div>
       {/*SHOPPING CART ITEMS*/}
@@ -264,57 +268,6 @@ function App() {
       </div>
     </div>
   );
-}
-
-//PAYMENT FORM VALIDATION
-let validate = function () {
-  val = true;
-  let email = document.getElementById("inputEmail4");
-  let name = document.getElementById("inputName");
-  let card = document.getElementById("inputCard");
-  if (
-    !email.value.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    )
-  ) {
-    email.setAttribute("class", "form-control is-invalid");
-    val = false;
-  } else {
-    email.setAttribute("class", "form-control is-valid");
-    order.email = email.value;
-  }
-  if (name.value.length == 0) {
-    name.setAttribute("class", "form-control is-invalid");
-    val = false;
-  } else {
-    name.setAttribute("class", "form-control is-valid");
-    order.name = name.value;
-  }
-  if (!card.value.match(/^[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}$/)) {
-    card.setAttribute("class", "form-control is-invalid");
-    val = false;
-  } else {
-    card.setAttribute("class", "form-control is-valid");
-    order.card = card.value;
-  }
-  if (val) {
-    form.classList.add("collapse");
-    for (const [key, value] of Object.entries(order)) {
-      summaryList.innerHTML +=
-        '<li class="list-group-item"> <b>' +
-        `${key}` +
-        ": </b>" +
-        `${value}` +
-        "</li>";
-    }
-    summaryCard.classList.remove("collapse");
-    alertPlaceholder.innerHTML = "";
-    alert(
-      '<i class="bi-cart-check-fill"></i> You have made an order!',
-      "success"
-    );
-  }
-  return val;
 };
 
-export default App;
+export default Shop;
