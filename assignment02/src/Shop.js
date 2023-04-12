@@ -241,7 +241,7 @@ const Shop = () => {
                 </button>
               </div>
             </form>
-            <div class="card collapse" style="width: 18rem;">
+            <div class="card collapse" style={{width: 18+'rem'}}>
               <div class="card-body">
                 <h5 class="card-title">Order summary</h5>
                 <p class="card-text">Here is a summary of your order.</p>
