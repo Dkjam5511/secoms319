@@ -53,3 +53,26 @@
 img {
   width: 50%;
 }
+
+.download2 {
+  display: inline-block;
+  margin-right: 10px;
+  background: #339dff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 38px;
+  border-radius: 50px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 170px;
+  text-align: center;
+  border: none;
+}
+
+.download2:hover {
+  background: #fff;
+  color: #339dff;
+  box-shadow: 0 4px 4px rgba(83, 100, 255, 0.32);
+  font-size: 16px;
+}

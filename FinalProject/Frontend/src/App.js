@@ -323,11 +323,21 @@ function App() {
             <div class="row">{showFavoritedStocks}</div>
           </div>
           <h1>Catalog of Stocks</h1>
-          <button onClick={() => showCreateView()}>Create</button>
-          <button onClick={() => showReadView()}>Read</button>
-          <button onClick={() => showUpdateView()}>Update</button>
-          <button onClick={() => showDeleteView()}>Delete</button>
-          <button onClick={() => showAuthorView()}>Authors</button>
+          <button onClick={() => showCreateView()} class="download2">
+            Create
+          </button>
+          <button onClick={() => showReadView()} class="download2">
+            Read
+          </button>
+          <button onClick={() => showUpdateView()} class="download2">
+            Update
+          </button>
+          <button onClick={() => showDeleteView()} class="download2">
+            Delete
+          </button>
+          <button onClick={() => showAuthorView()} class="download2">
+            Authors
+          </button>
           {viewStocks && (
             <div>
               <h3>Show all available Stocks:</h3>
@@ -501,7 +511,7 @@ function App() {
           <div class="row bg-light" style={{ padding: "20px" }}>
             <div class="col-3">
               <img
-                src="./myotherimages/ethan.jpg"
+                src="./Frontend/public/ethan.jpg"
                 style={{ width: "50%", borderRadius: "25%" }}
               />
             </div>
@@ -513,7 +523,6 @@ function App() {
                 <li>Loves playing basketball and skiing</li>
                 <li>Currently learning THREE.js</li>
                 <li>GOAT at ALL video games</li>
-                <li>Currently looking for a fulltime job :)</li>
               </ul>
             </div>
             <div class="col-3">
