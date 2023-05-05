@@ -2,10 +2,10 @@ import './App.css';
 import { useState, useEffect } from "react";
 
 function App() {
-  const [product, setProduct] = useState([]);
+  const [Stock, setStock] = useState([]);
   const [viewer1, setViewer1] = useState(false);
 
-  const [oneProduct, setOneProduct] = useState([]);
+  const [oneStock, setOneStock] = useState([]);
   const [viewer2, setViewer2] = useState(false);
 
   const [checked4, setChecked4] = useState(false);
@@ -15,36 +15,36 @@ function App() {
 
   const [viewer4, setViewer4] = useState(false);
 
-  const [viewProducts, setViewProducts] = useState(false);
-  const [viewAddProduct, setViewAddProduct] = useState(false);
-  const [viewUpdateProduct, setViewUpdateProduct] = useState(false);
-  const [viewDeleteProduct, setViewDeleteProduct] = useState(false);
+  const [viewStocks, setViewStocks] = useState(false);
+  const [viewAddStock, setViewAddStock] = useState(false);
+  const [viewUpdateStock, setViewUpdateStock] = useState(false);
+  const [viewDeleteStock, setViewDeleteStock] = useState(false);
   const [viewAuthor, setViewAuthor] = useState(false);
 
-  const [addNewPrice, setAddNewPrice] = useState({
+  const [addNewFavorite, setAddNewFavorite] = useState({
     _id: 0,
-    price: 0.0,
+    favorite: 0,
   })
 
-  function handlePriceChange(evt) {
+  function handleFavoriteChange(evt) {
     const value = evt.target.value;
-    setAddNewPrice({ ...addNewPrice, _id: index + 1, price: value });
+    setAddNewFavorite({ ...addNewFavorite, _id: index + 1, favorite: value });
   }
 
   function showReadView() {
-    setViewProducts(!viewProducts);
+    setViewStocks(!viewStocks);
   }
 
   function showUpdateView() {
-    setViewUpdateProduct(!viewUpdateProduct);
+    setViewUpdateStock(!viewUpdateStock);
   }
 
   function showCreateView() {
-    setViewAddProduct(!viewAddProduct);
+    setViewAddStock(!viewAddStock);
   }
 
   function showDeleteView() {
-    setViewDeleteProduct(!viewDeleteProduct);
+    setViewDeleteStock(!viewDeleteStock);
   }
 
   function showAuthorView() {
@@ -52,75 +52,64 @@ function App() {
   }
 
   useEffect(() => {
-    getAllProducts();
+    getAllStocks();
     }, []);
 
   useEffect(() => {
-    getAllProducts();
+    getAllStocks();
     }, [checked4]);
 
-  function getAllProducts() {
+  function getAllStocks() {
     fetch("http://localhost:4000/")
     .then((response) => response.json())
     .then((data) => {
-      console.log("Show Catalog of Products :");
+      console.log("Show Catalog of Stocks :");
       console.log(data);
-      setProduct(data);
+      setStock(data);
     });
     setViewer1(!viewer1);
   }
 
-  const showAllItems = product.map((el) => (
+  const showAllItems = Stock.map((el) => (
     <div key={el._id}>
     <img src={el.image} width={30} /> <br />
-    Title: {el.title} <br />
-    Category: {el.category} <br />
-    Price: {el.price} <br />
-    Rate :{el.rating.rate} and Count:{el.rating.count} <br />
+    Name: {el.name} <br />
+    Favorite: {el.favorite.toString()} <br />
+    Data: {el.data[6]} <br />
     </div>
   ));
 
-  function getOneProduct(id) {
+  function getOneStock(id) {
     console.log(id);
     if (id >= 1 && id <= 20) {
       fetch("http://localhost:4000/" + id)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Show one product :", id);
+        console.log("Show one Stock :", id);
         console.log(data);
         const dataArr = [];
         dataArr.push(data);
-        setOneProduct(dataArr);
+        setOneStock(dataArr);
       });
       setViewer2(!viewer2);
     } else {
-    console.log("Wrong number of Product id.");
+    console.log("Wrong number of Stock id.");
     }
   }
 
   function handleChange(evt) {
     const value = evt.target.value;
     if (evt.target.name === "_id") {
-      setAddNewProduct({ ...addNewProduct, _id: value });
-    } else if (evt.target.name === "title") {
-      setAddNewProduct({ ...addNewProduct, title: value });
-    } else if (evt.target.name === "price") {
-      setAddNewProduct({ ...addNewProduct, price: value });
-    } else if (evt.target.name === "description") {
-      setAddNewProduct({ ...addNewProduct, description: value });
-    } else if (evt.target.name === "category") {
-      setAddNewProduct({ ...addNewProduct, category: value });
+      setAddNewStock({ ...addNewStock, _id: value });
+    } else if (evt.target.name === "name") {
+      setAddNewStock({ ...addNewStock, name: value });
+    } else if (evt.target.name === "favorite") {
+      setAddNewStock({ ...addNewStock, favorite: value });
     } else if (evt.target.name === "image") {
-    const temp = value;
-      setAddNewProduct({ ...addNewProduct, image: temp });
-    } else if (evt.target.name === "rate") {
-      setAddNewProduct({ ...addNewProduct, rating: { rate: value } });
-    } else if (evt.target.name === "count") {
-      const temp = addNewProduct.rating.rate;
-      setAddNewProduct({
-      ...addNewProduct,
-      rating: { rate: temp, count: value },
-      });
+      const temp = value;
+      setAddNewStock({ ...addNewStock, image: temp });
+    } else if (evt.target.name === "data") {
+      setAddNewStock({ ...addNewStock, data: value });
     }
   }
 
@@ -130,11 +119,11 @@ function App() {
     fetch("http://localhost:4000/insert", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(addNewProduct),
+      body: JSON.stringify(addNewStock),
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Post a new product completed");
+      console.log("Post a new Stock completed");
       console.log(data);
       if (data) {
         //const keys = Object.keys(data);
@@ -144,26 +133,26 @@ function App() {
     });
   }
 
-  function getOneByOneProductNext() {
-    if (product.length > 0) {
-      if (index === product.length - 1) setIndex(0);
+  function getOneByOneStockNext() {
+    if (Stock.length > 0) {
+      if (index === Stock.length - 1) setIndex(0);
       else setIndex(index + 1);
-      if (product.length > 0) setViewer4(true);
+      if (Stock.length > 0) setViewer4(true);
       else setViewer4(false);
     }
   }
 
-  function getOneByOneProductPrev() {
-    if (product.length > 0) {
-      if (index === 0) setIndex(product.length - 1);
+  function getOneByOneStockPrev() {
+    if (Stock.length > 0) {
+      if (index === 0) setIndex(Stock.length - 1);
       else setIndex(index - 1);
-      if (product.length > 0) setViewer4(true);
+      if (Stock.length > 0) setViewer4(true);
       else setViewer4(false);
     }
   }
 
-  function deleteOneProduct(deleteid) {
-    console.log("Product to delete :", deleteid);
+  function deleteOneStock(deleteid) {
+    console.log("Stock to delete :", deleteid);
     fetch("http://localhost:4000/delete/", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
@@ -171,7 +160,7 @@ function App() {
     })
     .then((response) => response.json())
     .then((data) => {
-    console.log("Delete a product completed : ", deleteid);
+    console.log("Delete a Stock completed : ", deleteid);
     console.log(data);
     if (data) {
     //const keys = Object.keys(data);
@@ -188,11 +177,11 @@ function App() {
       fetch("http://localhost:4000/update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(addNewPrice),
+        body: JSON.stringify(addNewFavorite),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Put a new price completed");
+          console.log("Put a new Data completed");
           console.log(data);
           if (data) {
             //const keys = Object.keys(data);
@@ -202,99 +191,89 @@ function App() {
         });
     }
 
-  const showOneItem = oneProduct.map((el) => (
+  const showOneItem = oneStock.map((el) => (
     <div key={el._id}>
-    <img src={el.image} width={30} /> <br />
-    Title: {el.title} <br />
-    Category: {el.category} <br />
-    Price: {el.price} <br />
-    Rate :{el.rating.rate} and Count:{el.rating.count} <br />
+      <img src={el.image} width={30} /> <br />
+      Name: {el.name} <br />
+      Favorite: {el.favorite} <br />
+      Data: {el.data[6]} <br />
     </div>
   ));
 
-  const [addNewProduct, setAddNewProduct] = useState({
+  const [addNewStock, setAddNewStock] = useState({
     _id: 0,
-    title: "",
-    price: 0.0,
-    description: "",
-    category: "",
+    name: "",
+    favorite: false,
     image: "http://127.0.0.1:4000/images/",
-    rating: { rate: 0.0, count: 0 },
+    data: [0,0,0,0,0,0,0],
   });
 
   return (
     <div>
-      <h1>Catalog of Products</h1>
+      <h1>Catalog of Stocks</h1>
       <button onClick={() => showCreateView()}>Create</button>
       <button onClick={() => showReadView()}>Read</button>
       <button onClick={() => showUpdateView()}>Update</button>
       <button onClick={() => showDeleteView()}>Delete</button>
       <button onClick={() => showAuthorView()}>Authors</button>
 
-      {viewProducts && <div>
-        <h3>Show all available Products:</h3>
-        <button onClick={() => getAllProducts()}>Show All Products</button>
+      {viewStocks && <div>
+        <h3>Show all available Stocks:</h3>
+        <button onClick={() => getAllStocks()}>Show All Stocks</button>
         <hr></hr>
-        {viewer1 && <div>Products {showAllItems}</div>}
+        {viewer1 && <div>Stocks {showAllItems}</div>}
       </div>}
-      {viewProducts && <div><h3>Show one Product by Id:</h3>
-        <input type="text" id="message" name="message" placeholder="id" onChange={(e) => getOneProduct(e.target.value)} />
-        {viewer2 && <div>Product: {showOneItem}</div>}
+      {viewStocks && <div><h3>Show one Stock by Id:</h3>
+        <input type="text" id="message" name="message" placeholder="id" onChange={(e) => getOneStock(e.target.value)} />
+        {viewer2 && <div>Stock: {showOneItem}</div>}
       </div>}
-      {viewAddProduct && <div>
-        <h3>Add a new product :</h3>
+      {viewAddStock && <div>
+        <h3>Add a new Stock :</h3>
         <form action="">
-          <input type="number" placeholder="id?" name="_id" value={addNewProduct._id} onChange={handleChange} />
-          <input type="text" placeholder="title?" name="title" value={addNewProduct.title} onChange={handleChange} />
-          <input type="number" placeholder="price?" name="price" value={addNewProduct.price} onChange={handleChange} />
-          <input type="text" placeholder="description?" name="description" value={addNewProduct.description} onChange={handleChange} />
-          <input type="text" placeholder="category?" name="category" value={addNewProduct.category} onChange={handleChange} />
-          <input type="text" placeholder="image?" name="image" value={addNewProduct.image} onChange={handleChange} />
-          <input type="number" placeholder="rate?" name="rate" value={addNewProduct.rating.rate} onChange={handleChange} />
-          <input type="number" placeholder="count?" name="count" value={addNewProduct.rating.count} onChange={handleChange} />
+          <input type="number" placeholder="id?" name="_id" value={addNewStock._id} onChange={handleChange} />
+          <input type="text" placeholder="name?" name="name" value={addNewStock.name} onChange={handleChange} />
+          <input type="boolean" placeholder="favorite?" name="favorite" value={addNewStock.favorite} onChange={handleChange} />
+          <input type="text" placeholder="image?" name="image" value={addNewStock.image} onChange={handleChange} />
+          <input type="text" placeholder="data?" name="data" value={addNewStock.data} onChange={handleChange} />
           <button type="submit" onClick={handleOnSubmit}>
             submit
           </button>
         </form>
       </div>}
 
-      {viewUpdateProduct && <div>
-        <h3>Update a products's price</h3>
+      {viewUpdateStock && <div>
+        <h3>Update a Stocks's Favorite</h3>
         <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked3}
           onChange={(e) => setChecked3(!checked3)} />
-        <button onClick={() => getOneByOneProductPrev()}>Prev</button>
-        <button onClick={() => getOneByOneProductNext()}>Next</button>
-        <input type="number" placeholder="new price?" name="newPrice" value={addNewPrice.price} onChange={handlePriceChange} />
+        <button onClick={() => getOneByOneStockPrev()}>Prev</button>
+        <button onClick={() => getOneByOneStockNext()}>Next</button>
+        <input type="boolean" placeholder="favorite?" name="favorite" value={addNewFavorite.favorite} onChange={handleFavoriteChange} />
         <button type="submit" onClick={handleOnUpdate}>Update</button>
         {checked3 && (
-          <div key={product[index]._id}>
-            <img src={product[index].image} width={30} /> <br />
-            Id:{product[index]._id} <br />
-            Title: {product[index].title} <br />
-            Category: {product[index].category} <br />
-            Price: {product[index].price} <br />
-            Rate :{product[index].rating.rate} and Count:
-            {product[index].rating.count} <br />
+          <div key={Stock[index]._id}>
+            <img src={Stock[index].image} width={30} /> <br />
+            Id:{Stock[index]._id} <br />
+            Name: {Stock[index].name} <br />
+            Favorite: {Stock[index].favorite.toString()} <br />
+            Data: {Stock[index].data} <br />
           </div>
         )}
       </div>}
 
-      {viewDeleteProduct && <div>
-        <h3>Delete one product:</h3>
+      {viewDeleteStock && <div>
+        <h3>Delete one Stock:</h3>
         <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked4}
           onChange={(e) => setChecked4(!checked4)} />
-        <button onClick={() => getOneByOneProductPrev()}>Prev</button>
-        <button onClick={() => getOneByOneProductNext()}>Next</button>
-        <button onClick={() => deleteOneProduct(product[index]._id)}>Delete</button>
+        <button onClick={() => getOneByOneStockPrev()}>Prev</button>
+        <button onClick={() => getOneByOneStockNext()}>Next</button>
+        <button onClick={() => deleteOneStock(Stock[index]._id)}>Delete</button>
         {checked4 && (
-          <div key={product[index]._id}>
-            <img src={product[index].image} width={30} /> <br />
-            Id:{product[index]._id} <br />
-            Title: {product[index].title} <br />
-            Category: {product[index].category} <br />
-            Price: {product[index].price} <br />
-            Rate :{product[index].rating.rate} and Count:
-            {product[index].rating.count} <br />
+          <div key={Stock[index]._id}>
+            <img src={Stock[index].image} width={30} /> <br />
+            Id:{Stock[index]._id} <br />
+            Name: {Stock[index].name} <br />
+            Favorite: {Stock[index].favorite.toString()}<br />
+            Data: {Stock[index].data}<br />
           </div>
         )}
       </div>}
