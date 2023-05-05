@@ -2,7 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const Product = require("./dataSchema.js")
+const Stock = require("./dataSchema.js")
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -24,58 +24,52 @@ app.listen(port, () => {
 
 app.get("/", async (req, resp) => {
     const query = {};
-    const allProducts = await Product.find(query);
-    console.log(allProducts);
-    resp.send(allProducts);
+    const allStocks = await Stock.find(query);
+    console.log(allStocks);
+    resp.send(allStocks);
 });
 
 app.get("/:id", async (req, resp) => {
     const id = req.params.id;
     const query = { _id: id };
-    const oneProduct = await Product.findOne(query);
-    console.log(oneProduct);
-    resp.send(oneProduct);
+    const oneStock = await Stock.findOne(query);
+    console.log(oneStock);
+    resp.send(oneStock);
 });
 
 app.post("/insert", async (req, res) => {
     console.log(req.body);
-    const p_id = req.body._id;
-    const ptitle = req.body.title;
-    const pprice = req.body.price;
-    const pdescription = req.body.description;
-    const pcategory = req.body.category;
-    const pimage = req.body.image;
-    const prate = req.body.rating.rate;
-    const pcount = req.body.rating.count;
-
-    const formData = new Product({
-        _id: p_id,
-        title: ptitle,
-        price: pprice,
-        description: pdescription,
-        category: pcategory,
-        image: pimage,
-        rating: { rate: prate, count: pcount },
+    const s_id = req.body._id;
+    const sname = req.body.title;
+    const sfavorite = req.body.favorite;
+    const simage = req.body.image;
+    const sdata = req.body.data;
+    const formData = new Stock({
+        _id: s_id,
+        name: sname,
+        favorite: sfavorite,
+        image: simage,
+        data: sdata,
     });
     try {
         // await formData.save();
-        await Product.create(formData);
-        const messageResponse = { message: `Product ${p_id} added correctly` };
+        await Stock.create(formData);
+        const messageResponse = { message: `Stock ${p_id} added correctly` };
         res.send(JSON.stringify(messageResponse));
     } catch (err) {
-        console.log("Error while adding a new product:" + err);
+        console.log("Error while adding a new Stock:" + err);
     }
 });
 
 app.put("/update", async (req, res) => {
     console.log("Update :", req.body);
     try {
-        await Product.findOneAndUpdate(
+        await Stock.findOneAndUpdate(
             { _id: req.body._id },
-            { price: req.body.price }
+            { favorite: req.body.favorite }
         )
         const messageResponse = {
-            message: `Product ${req.body._id} updated correctly`,
+            message: `Stock ${req.body._id} updated correctly`,
         };
         res.send(JSON.stringify(messageResponse));
     } catch (err) {
@@ -88,9 +82,9 @@ app.delete("/delete", async (req, res) => {
     console.log("Delete :", req.body);
     try {
         const query = { _id: req.body._id };
-        await Product.deleteOne(query);
+        await Stock.deleteOne(query);
         const messageResponse = {
-            message: `Product ${req.body._id} deleted correctly`,
+            message: `Stock ${req.body._id} deleted correctly`,
         };
         res.send(JSON.stringify(messageResponse));
     } catch (err) {
