@@ -141,15 +141,6 @@ function App() {
     setViewer1(!viewer1);
   }
 
-  const showAllItems = Stock.map((el) => (
-    <div key={el._id}>
-      <img src={el.image} width={30} /> <br />
-      Name: {el.name} <br />
-      Favorite: {el.favorite.toString()} <br />
-      Data: {el.data[6]} <br />
-    </div>
-  ));
-
   var favoriteStocks = Stock.filter(function (stock) {
     return stock.favorite;
   });
@@ -160,24 +151,6 @@ function App() {
       {el.name} <br />${el.data[6]} <br />
     </div>
   ));
-
-  function getOneStock(id) {
-    console.log(id);
-    if (id >= 1 && id <= 20) {
-      fetch("http://localhost:4000/" + id)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Show one Stock :", id);
-          console.log(data);
-          const dataArr = [];
-          dataArr.push(data);
-          setOneStock(dataArr);
-        });
-      setViewer2(!viewer2);
-    } else {
-      console.log("Wrong number of Stock id.");
-    }
-  }
 
   function handleChange(evt) {
     const value = evt.target.value;
@@ -191,7 +164,8 @@ function App() {
       const temp = value;
       setAddNewStock({ ...addNewStock, image: temp });
     } else if (evt.target.name === "data") {
-      setAddNewStock({ ...addNewStock, data: value });
+      const arr = value.split(",").map(Number);
+      setAddNewStock({ ...addNewStock, data: arr });
     }
   }
 
@@ -273,15 +247,6 @@ function App() {
       });
   }
 
-  const showOneItem = oneStock.map((el) => (
-    <div key={el._id}>
-      <img src={el.image} width={30} /> <br />
-      Name: {el.name} <br />
-      Favorite: {el.favorite} <br />
-      Data: {el.data[6]} <br />
-    </div>
-  ));
-
   const [addNewStock, setAddNewStock] = useState({
     _id: 0,
     name: "",
@@ -298,7 +263,7 @@ function App() {
           <td id="image1">
             <img src={el.image} width={30} />
           </td>
-          <td id="price1">{el.data[6]}</td>
+          <td id="price1">${el.data[6]}</td>
         </tr>
       </tbody>
     </div>
@@ -412,11 +377,12 @@ function App() {
               </button>
               {checked3 && (
                 <div key={Stock[index]._id}>
-                  <img src={Stock[index].image} width={30} /> <br />
+                  <img src={Stock[index].image} style={{ width: "15%" }} />
+                  <br />
                   Id:{Stock[index]._id} <br />
                   Name: {Stock[index].name} <br />
                   Favorite: {Stock[index].favorite.toString()} <br />
-                  Data: {Stock[index].data} <br />
+                  Data: {Stock[index].data.join(", ")} <br />
                 </div>
               )}
             </div>
@@ -439,12 +405,13 @@ function App() {
               </button>
               {checked4 && (
                 <div key={Stock[index]._id}>
-                  <img src={Stock[index].image} width={30} /> <br />
+                  <img src={Stock[index].image} style={{ width: "15%" }} />{" "}
+                  <br />
                   Id:{Stock[index]._id} <br />
                   Name: {Stock[index].name} <br />
                   Favorite: {Stock[index].favorite.toString()}
                   <br />
-                  Data: {Stock[index].data}
+                  Data: {Stock[index].data.join(", ")}
                   <br />
                 </div>
               )}
@@ -463,7 +430,6 @@ function App() {
             <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">Image</th>
                   <th scope="col">Price</th>
