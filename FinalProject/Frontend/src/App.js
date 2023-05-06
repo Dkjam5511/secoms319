@@ -1,5 +1,6 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import Chart from "chart.js/auto";
+import { useState, useEffect, useRef } from "react";
 
 function App() {
   const [Stock, setStock] = useState([]);
@@ -15,14 +16,17 @@ function App() {
 
   const [viewer4, setViewer4] = useState(false);
 
-  const [viewStocks, setViewStocks] = useState(false);
   const [viewAddStock, setViewAddStock] = useState(false);
   const [viewUpdateStock, setViewUpdateStock] = useState(false);
   const [viewDeleteStock, setViewDeleteStock] = useState(false);
-  const [viewAuthor, setViewAuthor] = useState(false);
   const [viewDashboard, setDashboardView] = useState(false);
   const [viewHome, setHomeView] = useState(true);
   const [viewAbout, setAboutView] = useState(false);
+
+  const chartRef = useRef(null);
+  const myChart = useRef(null);
+
+  const [chartData, setChartData] = useState([50, 50, 60, 40, 50, 60, 50]);
 
   const [addNewFavorite, setAddNewFavorite] = useState({
     _id: 0,
@@ -32,10 +36,6 @@ function App() {
   function handleFavoriteChange(evt) {
     const value = evt.target.value;
     setAddNewFavorite({ ...addNewFavorite, _id: index + 1, favorite: value });
-  }
-
-  function showReadView() {
-    setViewStocks(!viewStocks);
   }
 
   function showUpdateView() {
@@ -48,10 +48,6 @@ function App() {
 
   function showDeleteView() {
     setViewDeleteStock(!viewDeleteStock);
-  }
-
-  function showAuthorView() {
-    setViewAuthor(!viewAuthor);
   }
 
   function showDashboardView() {
@@ -79,6 +75,57 @@ function App() {
   useEffect(() => {
     getAllStocks();
   }, [checked4]);
+
+  useEffect(() => {
+    if (myChart.current) {
+      myChart.current.data.datasets[0].data = chartData;
+      myChart.current.update();
+    }
+  }, [chartData]);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      const chart = new Chart(chartRef.current, {
+        type: "line",
+        data: {
+          labels: [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ],
+          datasets: [
+            {
+              data: chartData,
+              lineTension: 0,
+              backgroundColor: "transparent",
+              borderColor: "#007bff",
+              borderWidth: 4,
+              pointBackgroundColor: "#007bff",
+            },
+          ],
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: false,
+                },
+              },
+            ],
+          },
+          legend: {
+            display: false,
+          },
+        },
+      });
+      myChart.current = chart;
+    }
+  }, [chartRef, chartData]);
 
   function getAllStocks() {
     fetch("http://localhost:4000/")
@@ -240,59 +287,19 @@ function App() {
     data: [0, 0, 0, 0, 0, 0, 0],
   });
 
-  // let myChart;
-  // function changeChart(index) {
-  //   for (let i = 0; i < 7; i++) {
-  //     myChart.data.datasets[0].data[i] = stocks.stocks[index].data[i];
-  //   }
-  //   myChart.update();
-  // }
-
-  // (() => {
-  //   "use strict";
-  //   feather.replace({ "aria-hidden": "true" });
-  //   // Graphs
-  //   const ctx = document.getElementById("myChart");
-  //   // eslint-disable-next-line no-unused-vars
-  //   myChart = new Chart(ctx, {
-  //     type: "line",
-  //     data: {
-  //       labels: [
-  //         "Sunday",
-  //         "Monday",
-  //         "Tuesday",
-  //         "Wednesday",
-  //         "Thursday",
-  //         "Friday",
-  //         "Saturday",
-  //       ],
-  //       datasets: [
-  //         {
-  //           data: [331, 424, 326, 440, 380, 400, 468],
-  //           lineTension: 0,
-  //           backgroundColor: "transparent",
-  //           borderColor: "#007bff",
-  //           borderWidth: 4,
-  //           pointBackgroundColor: "#007bff",
-  //         },
-  //       ],
-  //     },
-  //     options: {
-  //       scales: {
-  //         yAxes: [
-  //           {
-  //             ticks: {
-  //               beginAtZero: false,
-  //             },
-  //           },
-  //         ],
-  //       },
-  //       legend: {
-  //         display: false,
-  //       },
-  //     },
-  //   });
-  // })();
+  const showAllStocks = Stock.map((el) => (
+    <div key={el._id}>
+      <tbody>
+        <tr onClick={() => setChartData(el.data)}>
+          <td>{el.name}</td>
+          <td id="image1">
+            <img src={el.image} width={30} />
+          </td>
+          <td id="price1">{el.data[6]}</td>
+        </tr>
+      </tbody>
+    </div>
+  ));
 
   return (
     <div>
@@ -326,39 +333,12 @@ function App() {
           <button onClick={() => showCreateView()} class="download2">
             Create
           </button>
-          <button onClick={() => showReadView()} class="download2">
-            Read
-          </button>
           <button onClick={() => showUpdateView()} class="download2">
             Update
           </button>
           <button onClick={() => showDeleteView()} class="download2">
             Delete
           </button>
-          <button onClick={() => showAuthorView()} class="download2">
-            Authors
-          </button>
-          {viewStocks && (
-            <div>
-              <h3>Show all available Stocks:</h3>
-              <button onClick={() => getAllStocks()}>Show All Stocks</button>
-              <hr></hr>
-              {viewer1 && <div>Stocks {showAllItems}</div>}
-            </div>
-          )}
-          {viewStocks && (
-            <div>
-              <h3>Show one Stock by Id:</h3>
-              <input
-                type="text"
-                id="message"
-                name="message"
-                placeholder="id"
-                onChange={(e) => getOneStock(e.target.value)}
-              />
-              {viewer2 && <div>Stock: {showOneItem}</div>}
-            </div>
-          )}
           {viewAddStock && (
             <div>
               <h3>Add a new Stock :</h3>
@@ -467,39 +447,28 @@ function App() {
               )}
             </div>
           )}
-
-          {viewAuthor && (
-            <div>
-              <h3>Student Information</h3>
-              <p>SE/COM S 319</p>
-              <p>4/30/2023</p>
-              <p>Abraham Aldaco</p>
-
-              <h4>Drew Kinneer</h4>
-              <p>Email: dkinneer@iastate.edu</p>
-              <h4>Ethan Kinneer</h4>
-              <p>Email: ekinneer@iastate.edu</p>
-            </div>
-          )}
-
-          {viewAuthor && (
-            <div>
-              <h3>Student Information</h3>
-              <p>SE/COM S 319</p>
-              <p>4/30/2023</p>
-              <p>Abraham Aldaco</p>
-
-              <h4>Drew Kinneer</h4>
-              <p>Email: dkinneer@iastate.edu</p>
-              <h4>Ethan Kinneer</h4>
-              <p>Email: ekinneer@iastate.edu</p>
-            </div>
-          )}
         </div>
       )}
       {viewDashboard && (
         <div>
           <h1>Stock Dashboard</h1>
+          <div className="d-flex">
+            <canvas class="my-4 w-100" ref={chartRef} />
+          </div>
+          <h2>All Stocks (Click a stock to see its price history!)</h2>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>{showAllStocks}</tbody>
+            </table>
+          </div>
         </div>
       )}
       {viewAbout && (
