@@ -26,7 +26,7 @@ function App() {
   const chartRef = useRef(null);
   const myChart = useRef(null);
 
-  const [chartData, setChartData] = useState([50, 50, 60, 40, 50, 60, 50]);
+  const [chartData, setChartData] = useState([]);
 
   const [addNewFavorite, setAddNewFavorite] = useState({
     _id: 0,
@@ -78,11 +78,14 @@ function App() {
 
   useEffect(() => {
     if (chartRef.current) {
+      if (myChart.current) {
+        myChart.current.destroy();
+      }
       const chart = new Chart(chartRef.current, {
         type: "line",
         data: {
           labels: [
-            "Sunday",
+            "Snday",
             "Monday",
             "Tuesday",
             "Wednesday",
@@ -118,7 +121,7 @@ function App() {
       });
       myChart.current = chart;
     }
-  }, [chartRef]);
+  });
 
   useEffect(() => {
     if (myChart.current) {
