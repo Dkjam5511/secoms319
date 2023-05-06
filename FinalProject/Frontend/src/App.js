@@ -77,13 +77,6 @@ function App() {
   }, [checked4]);
 
   useEffect(() => {
-    if (myChart.current) {
-      myChart.current.data.datasets[0].data = chartData;
-      myChart.current.update();
-    }
-  }, [chartData]);
-
-  useEffect(() => {
     if (chartRef.current) {
       const chart = new Chart(chartRef.current, {
         type: "line",
@@ -125,7 +118,14 @@ function App() {
       });
       myChart.current = chart;
     }
-  }, [chartRef, chartData]);
+  }, [chartRef]);
+
+  useEffect(() => {
+    if (myChart.current) {
+      myChart.current.data.datasets[0].data = chartData;
+      myChart.current.update();
+    }
+  }, [chartData]);
 
   function getAllStocks() {
     fetch("http://localhost:4000/")
