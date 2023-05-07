@@ -146,9 +146,10 @@ function App() {
   });
 
   const showFavoritedStocks = favoriteStocks.map((el) => (
-    <div class="col-3" key={el._id}>
+    <div class="col-3 text-center" key={el._id}>
       <img src={el.image} width={30} /> <br />
-      {el.name} <br />${el.data[6]} <br />
+      <h4 class="text-info">{el.name}</h4>
+      <h5 class="text-info">${el.data[6]}</h5>
     </div>
   ));
 
@@ -258,12 +259,13 @@ function App() {
   const showAllStocks = Stock.map((el) => (
     <div key={el._id}>
       <tbody>
-        <tr onClick={() => setChartData(el.data)}>
-          <td>{el.name}</td>
+        <tr class="text-right" onClick={() => setChartData(el.data)}>
           <td id="image1">
-            <img src={el.image} width={30} />
+            <img src={el.image} />
           </td>
-          <td id="price1">${el.data[6]}</td>
+          <td id="price1">
+            <h4 class="text-center">${el.data[6]}</h4>
+          </td>
         </tr>
       </tbody>
     </div>
@@ -273,20 +275,29 @@ function App() {
     <div>
       <nav class="navbar bg-primary" data-bs-theme="dark">
         <div class="container">
-          <a class="navbar-brand text-white" href="./">
-            StockStream
+          <a class="navbar-brand text-white" href="./" role="button">
+            <img src="/logo.png" />
           </a>
           <a
             class="nav-link text-white active"
             aria-current="page"
+            role="button"
             onClick={() => showHomeView()}
           >
             Home
           </a>
-          <a class="nav-link text-white" onClick={() => showDashboardView()}>
+          <a
+            class="nav-link text-white"
+            role="button"
+            onClick={() => showDashboardView()}
+          >
             Stock Dashboard
           </a>
-          <a class="nav-link text-white" onClick={() => showAboutView()}>
+          <a
+            class="nav-link text-white"
+            role="button"
+            onClick={() => showAboutView()}
+          >
             About Us
           </a>
         </div>
@@ -294,23 +305,25 @@ function App() {
       {viewHome && (
         <div>
           <div class="container">
-            <h1>Favorite Stocks</h1>
+            <h1 class="text-center p-3">Favorite Stocks</h1>
             <div class="row">{showFavoritedStocks}</div>
           </div>
-          <h1>Catalog of Stocks</h1>
-          <button onClick={() => showCreateView()} class="download2">
-            Create
-          </button>
-          <button onClick={() => showUpdateView()} class="download2">
-            Update
-          </button>
-          <button onClick={() => showDeleteView()} class="download2">
-            Delete
-          </button>
+          <div class="col-12 text-center">
+            <h1 class="p-3">Manage Your Stocks</h1>
+            <button onClick={() => showCreateView()} class="download2">
+              Create
+            </button>
+            <button onClick={() => showUpdateView()} class="download2">
+              Update
+            </button>
+            <button onClick={() => showDeleteView()} class="download2">
+              Delete
+            </button>
+          </div>
           {viewAddStock && (
             <div>
               <h3>Add a new Stock :</h3>
-              <form action="">
+              <form class="well form-horizontal" action="">
                 <input
                   type="number"
                   placeholder="id?"
@@ -320,6 +333,7 @@ function App() {
                 />
                 <input
                   type="text"
+                  class="well form-horizontal"
                   placeholder="name?"
                   name="name"
                   value={addNewStock.name}
@@ -346,7 +360,11 @@ function App() {
                   value={addNewStock.data}
                   onChange={handleChange}
                 />
-                <button type="submit" onClick={handleOnSubmit}>
+                <button
+                  type="submit"
+                  class="download2"
+                  onClick={handleOnSubmit}
+                >
                   submit
                 </button>
               </form>
@@ -372,7 +390,7 @@ function App() {
                 value={addNewFavorite.favorite}
                 onChange={handleFavoriteChange}
               />
-              <button type="submit" onClick={handleOnUpdate}>
+              <button type="submit" class="download2" onClick={handleOnUpdate}>
                 Update
               </button>
               {checked3 && (
@@ -390,7 +408,7 @@ function App() {
 
           {viewDeleteStock && (
             <div>
-              <h3>Delete one Stock:</h3>
+              <h3>Delete One Stock:</h3>
               <input
                 type="checkbox"
                 id="acceptdelete"
@@ -398,9 +416,16 @@ function App() {
                 checked={checked4}
                 onChange={(e) => setChecked4(!checked4)}
               />
-              <button onClick={() => getOneByOneStockPrev()}>Prev</button>
-              <button onClick={() => getOneByOneStockNext()}>Next</button>
-              <button onClick={() => deleteOneStock(Stock[index]._id)}>
+              <button class="download2" onClick={() => getOneByOneStockPrev()}>
+                Prev
+              </button>
+              <button class="download2" onClick={() => getOneByOneStockNext()}>
+                Next
+              </button>
+              <button
+                class="download2"
+                onClick={() => deleteOneStock(Stock[index]._id)}
+              >
                 Delete
               </button>
               {checked4 && (
@@ -422,21 +447,22 @@ function App() {
       {viewDashboard && (
         <div>
           <h1>Stock Dashboard</h1>
-          <div className="d-flex">
-            <canvas class="my-4 w-100" ref={chartRef} />
-          </div>
-          <h2>All Stocks (Click a stock to see its price history!)</h2>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Price</th>
-                </tr>
-              </thead>
-              <tbody>{showAllStocks}</tbody>
-            </table>
+          <div class="row">
+            <div class="col-6">
+              <div className="d-flex">
+                <canvas class="my-4 w-100" ref={chartRef} />
+              </div>
+            </div>
+            <div class="col-6">
+              <h2>All Stocks (Click a stock to see its price history!)</h2>
+              <div class="row">
+                <div class="table-responsive">
+                  <table>
+                    <tbody>{showAllStocks}</tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -449,7 +475,7 @@ function App() {
           <div class="row bg-light" style={{ padding: "20px" }}>
             <div class="col-3">
               <img
-                src="./Frontend/public/ethan.jpg"
+                src="ethan.jpg"
                 style={{ width: "50%", borderRadius: "25%" }}
               />
             </div>
@@ -465,7 +491,7 @@ function App() {
             </div>
             <div class="col-3">
               <img
-                src="./myotherimages/Drew_Kinneer.jpg"
+                src="Drew_Kinneer.jpg"
                 style={{ width: "50%", borderRadius: "25%" }}
               />
             </div>
