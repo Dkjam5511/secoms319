@@ -373,7 +373,7 @@ function App() {
 
           {viewUpdateStock && (
             <div>
-              <h3>Update a Stocks's Favorite</h3>
+              <h3>Add a Stock to your Favorites</h3>
               <input
                 type="checkbox"
                 id="acceptdelete"
@@ -471,7 +471,7 @@ function App() {
           <h1 class="text-center">
             SE/ComS319 Construction of User Interfaces, Spring 2023
           </h1>
-          <h3 class="text-center">March 12, 2023</h3>
+          <h3 class="text-center">May 8, 2023</h3>
           <div class="row bg-light" style={{ padding: "20px" }}>
             <div class="col-3">
               <img
